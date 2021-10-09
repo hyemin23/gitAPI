@@ -1,0 +1,11 @@
+// webpack config ts를 webpack이 인식할 수 있게 만들어줌.
+// webpack 공식문서에 typescript와 연동하는 방법이 나옴.
+// webpack version4 가 안정성이 큼 5는 위험
+{
+    "compilerOptions" :{
+        "module" : "commonjs"
+        ,"moduleResolutuin" : "Node"
+        ,"target" : "es5"
+        ,"esModuleInterop": true
+    }
+}
