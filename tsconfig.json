@@ -20,7 +20,8 @@
             ,"@components/*" : ["components/*"]
             ,"@layouts/*" : ["layouts/*"]
             ,"@util/*" : ["utils/*"]
-            ,"@typings/*" : ["typeings/*"]
+            ,"@apis/*" : ["apis/*"]
+            ,"@pages/*" : ["pages/*"]
         }
     }
 }

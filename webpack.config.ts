@@ -23,7 +23,7 @@ const config: Configuration = {
       '@layouts': path.resolve(__dirname, 'layouts'),
       '@pages': path.resolve(__dirname, 'pages'),
       '@utils': path.resolve(__dirname, 'utils'),
-      '@typings': path.resolve(__dirname, 'typings'),
+      '@apis': path.resolve(__dirname, 'apis'),
     },
   },
 
@@ -82,7 +82,7 @@ const config: Configuration = {
   devServer: {
     // router 설정(새로고침 시 오류 방지)
     historyApiFallback: true,
-    port: 4000,
+    port: 3000,
     // webpack dev server (index.html) 파일 경로 유의.
     devMiddleware: { publicPath: '/dist/' },
     static: { directory: path.resolve(__dirname) },

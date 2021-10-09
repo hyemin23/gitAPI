@@ -1,7 +1,14 @@
-import React from 'react';
+import MyPage from '@pages/MyPage';
+import React, { FC } from 'react';
+import { Redirect, Route, Switch } from 'react-router';
 
-const App = () => {
-  return <div>좀만 참아주세요.</div>;
+const App: FC = () => {
+  return (
+    <Switch>
+      <Redirect exact path="/" to="/main" />
+      <Route path="/mypage" component={MyPage} />
+    </Switch>
+  );
 };
 
 export default App;
