@@ -1,6 +1,9 @@
 import path from 'path';
 import webpack, { Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+// typescript에서만 활용 ts,webpack 동시 실행하게 만들어주는 플러그인
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -29,8 +32,7 @@ const config: Configuration = {
     app: './client',
   },
 
-  // host reload
-
+  // hot reload
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
@@ -38,30 +40,73 @@ const config: Configuration = {
     publicPath: '/dist/',
   },
 
+  // babel config
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  browsers: ['IE 10'],
+                },
+                debug: isDevelopment,
+              },
+            ],
+            '@babel/preset-react',
+            '@babel/preset-typescript',
+          ],
+          env: {
+            development: {
+              plugins: [require.resolve('react-refresh/babel')],
+            },
+          },
+        },
+        exclude: path.join(__dirname, 'node_modules'),
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+    }),
+  ],
   devServer: {
     // router 설정(새로고침 시 오류 방지)
     historyApiFallback: true,
-    port: 3000,
+    port: 4000,
     // webpack dev server (index.html) 파일 경로 유의.
     devMiddleware: { publicPath: '/dist/' },
     static: { directory: path.resolve(__dirname) },
     // 프록시 설정
-    proxy: {
-      '/api/': {
-        // backend주소
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        ws: true,
-      },
-    },
+    // proxy: {
+    //   '/api/': {
+    //     // backend주소
+    //     target: 'http://localhost:8080',
+    //     changeOrigin: true,
+    //     ws: true,
+    //   },
+    // },
   },
 };
 
-// develope Mode settings
+// refresh & hot-reload 설정
 if (isDevelopment && config.plugins) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
-  // config.plugins.push(new ReactRefreshWebpackPlugin());
-  // config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'server', openAnalyzer: true }));
+  config.plugins.push(
+    new ReactRefreshWebpackPlugin({
+      overlay: {
+        useURLPolyfill: true,
+      },
+    }),
+  );
 }
-
 export default config;

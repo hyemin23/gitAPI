@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-            //  as 로  가오는거 방지
+        //  as 로  가오는거 방지
         "esModuleInterop" : true,
         //  에러난 위치 찾아주기
         "sourceMap" : true,

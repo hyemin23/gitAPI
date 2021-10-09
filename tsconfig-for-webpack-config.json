@@ -2,10 +2,10 @@
 // webpack 공식문서에 typescript와 연동하는 방법이 나옴.
 // webpack version4 가 안정성이 큼 5는 위험
 {
-    "compilerOptions" :{
-        "module" : "commonjs"
-        ,"moduleResolutuin" : "Node"
-        ,"target" : "es5"
-        ,"esModuleInterop": true
-    }
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "target": "es5",
+    "esModuleInterop": true
+  }
 }
