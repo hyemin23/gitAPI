@@ -24,6 +24,7 @@ const config: Configuration = {
       '@pages': path.resolve(__dirname, 'pages'),
       '@utils': path.resolve(__dirname, 'utils'),
       '@apis': path.resolve(__dirname, 'apis'),
+      '@common': path.resolve(__dirname, 'common'),
     },
   },
 

@@ -32,8 +32,11 @@ export const SearchBar = styled.div`
 
   form {
     width: 50%;
+    display: flex;
+    justify-content: center;
+
     & input {
-      width: 100%;
+      width: 400px;
       height: 40px;
       background-color: hsla(0, 0%, 100%, 0.125);
       border: none;
@@ -54,8 +57,11 @@ export const SearchBar = styled.div`
 export const Navigation = styled.nav`
   width: 50%;
   height: 100%;
+  margin-top: 10px;
 
   ul {
+    width: 400px;
+    margin: 0 auto;
     display: flex;
     padding: 0;
     li {
