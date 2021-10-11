@@ -5,6 +5,7 @@ import { Container } from './style';
 function Main() {
   const keys: string[] = [...'PAYHERE'];
   const history = useHistory();
+  let keyNumber = 0;
 
   const selectedKeyup = (number: number) => {
     const prevKey: HTMLElement = document.getElementById(keys[number - 1]) as HTMLElement;
@@ -13,55 +14,48 @@ function Main() {
     key.classList.add('selected');
   };
 
+  const switchKeyNumber = (event: KeyboardEvent) => {
+    const keyPressed: string = String.fromCharCode(event.keyCode);
+    if (keyPressed === keys[keyNumber]) {
+      switch (keyNumber) {
+        case 0:
+          keyNumber++;
+          selectedKeyup(keyNumber);
+          break;
+        case 1:
+          keyNumber++;
+          selectedKeyup(keyNumber);
+          break;
+        case 2:
+          keyNumber++;
+          selectedKeyup(keyNumber);
+          break;
+        case 3:
+          keyNumber++;
+          selectedKeyup(keyNumber);
+          break;
+        case 4:
+          keyNumber++;
+          selectedKeyup(keyNumber);
+          break;
+        case 5:
+          keyNumber++;
+          selectedKeyup(keyNumber);
+          break;
+        default:
+          keyNumber = 0;
+          document.removeEventListener('keyup', switchKeyNumber);
+          history.push('/home');
+          break;
+      }
+    } else {
+      alert('올바른 키를 입력해주세요.');
+    }
+  };
   const keyupEventListener = () => {
     const key: any = document.getElementById(keys[0]);
-    let keyNumber = 0;
     key.classList.add('selected');
-
-    document.addEventListener('keyup', (event: KeyboardEvent) => {
-      const keyPressed: string = String.fromCharCode(event.keyCode);
-      const keyElement = document.getElementById(keyPressed) as HTMLElement;
-
-      keyElement.classList.add('hit');
-      keyElement.addEventListener('animationend', () => {
-        keyElement.classList.remove('hit');
-      });
-
-      if (keyPressed === keys[keyNumber]) {
-        switch (keyNumber) {
-          case 0:
-            keyNumber++;
-            selectedKeyup(keyNumber);
-            break;
-          case 1:
-            keyNumber++;
-            selectedKeyup(keyNumber);
-            break;
-          case 2:
-            keyNumber++;
-            selectedKeyup(keyNumber);
-            break;
-          case 3:
-            keyNumber++;
-            selectedKeyup(keyNumber);
-            break;
-          case 4:
-            keyNumber++;
-            selectedKeyup(keyNumber);
-            break;
-          case 5:
-            keyNumber++;
-            selectedKeyup(keyNumber);
-            break;
-          default:
-            keyNumber = 0;
-            history.push('/home');
-            break;
-        }
-      } else {
-        alert('올바른 키를 입력해주세요.');
-      }
-    });
+    document.addEventListener('keyup', switchKeyNumber);
   };
 
   useEffect(() => {

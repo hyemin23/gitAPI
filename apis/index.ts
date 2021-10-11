@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
 
+// repository 정보 가져오기
 export const getSearchRepo = gql`
-  query MyQuery($query: String!) {
-    search(type: REPOSITORY, query: $query, first: 10) {
+  query getSearchRepo($query: String!) {
+    search(type: REPOSITORY, query: $query, first: 15) {
       edges {
         node {
           ... on Repository {
@@ -11,6 +12,7 @@ export const getSearchRepo = gql`
             owner {
               avatarUrl
               url
+              login
             }
             issues {
               totalCount
@@ -19,6 +21,11 @@ export const getSearchRepo = gql`
             url
           }
         }
+      }
+      repositoryCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
       }
     }
   }
