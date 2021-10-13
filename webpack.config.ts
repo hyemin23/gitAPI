@@ -73,6 +73,11 @@ const config: Configuration = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      // svg setting
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webapck'],
+      },
     ],
   },
   plugins: [

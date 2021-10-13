@@ -16,7 +16,7 @@
         "resolveJsonModule" : true,
         "baseUrl" : ".",
         "downlevelIteration": true, /* 'ES5'또는 'ES3'를 대상으로 할 때 'for-of', 스프레드 및 디스트 럭처링에서 이터 러블을 완벽하게 지원합니다. */
-        "paths": {
+         "paths": {
             "@hooks/*" : ["hooks/*"]
             ,"@components/*" : ["components/*"]
             ,"@layouts/*" : ["layouts/*"]
@@ -24,6 +24,14 @@
             ,"@apis/*" : ["apis/*"]
             ,"@pages/*" : ["pages/*"]
             ,"@common/*" : ["common/*"]
-        }
-    }
+        },
+    },
+             "include": [
+    "/src/custom.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+    // "**/*.tsx","*.ts","*/**.tsx"]
 }
+
+

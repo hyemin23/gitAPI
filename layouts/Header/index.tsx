@@ -1,11 +1,30 @@
 import Input from '@common/Input';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { IoLogoGithub } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { HeaderContainer, HeaderNavigation } from './style';
+import { useHistory } from 'react-router-dom';
 
-const onSubmit = () => {};
 const Header = () => {
+  const [repoValue, setRepoValue] = useState('');
+  const history = useHistory();
+
+  const onChangeRepo = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setRepoValue(event.target.value);
+  }, []);
+
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      history.push({
+        pathname: `/detail`,
+        search: `?repository=${repoValue}`,
+      });
+    },
+    [repoValue],
+  );
+
   return (
     <HeaderContainer>
       <div className="logo_container">
@@ -15,18 +34,12 @@ const Header = () => {
       </div>
       <div className="form_info">
         <form onSubmit={onSubmit}>
-          <Input placeholder="레포지토리명을 입력해주세요." />
+          <Input placeholder="레포지토리명을 입력해주세요." onChange={onChangeRepo} />
         </form>
       </div>
       <HeaderNavigation>
         <Link to="#">
-          <span>Issue</span>
-        </Link>
-        {/* 해당 버튼을 누르면 */}
-        {/* 모달 형식으로 내가 추가한 */}
-        {/* 레파지토리 삭제 가능하게끔 */}
-        <Link to="#">
-          <span>Profile</span>
+          <span>Subscribe Issues</span>
         </Link>
       </HeaderNavigation>
     </HeaderContainer>

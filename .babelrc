@@ -2,7 +2,9 @@
   "presets": [],
   "env": {
     "development": {
-      "plugins": ["babel-plugin-styled-components","@babel/plugin-transform-runtime"]
+      "plugins": [
+        "babel-plugin-styled-components","@babel/plugin-transform-runtime","inline-react-svg"
+      ]
     }
   }
 }

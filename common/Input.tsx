@@ -8,4 +8,4 @@ const Input: React.FC<IPros> = ({ ...props }) => {
   return <input {...props} />;
 };
 
-export default Input;
+export default React.memo(Input);

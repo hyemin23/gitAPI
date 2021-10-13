@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Container, Header, SearchBar, Navigation } from './style';
 import { IoLogoGithub } from 'react-icons/io';
 import Input from '@common/Input';
@@ -10,18 +10,21 @@ const Home = () => {
   const history = useHistory();
   // const serachKeyword = useDebounce(repoValue, 300);
 
-  const onChangeRepo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRepoValue(e.target.value);
-  };
+  const onChangeRepo = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setRepoValue(event.target.value);
+  }, []);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    history.push({
-      pathname: `/detail`,
-      search: `?repository=${repoValue}`,
-    });
-  };
+      history.push({
+        pathname: `/detail`,
+        search: `?repository=${repoValue}`,
+      });
+    },
+    [repoValue],
+  );
 
   return (
     <Container>
