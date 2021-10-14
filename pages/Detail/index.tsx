@@ -1,16 +1,18 @@
 import { getSearchRepo } from '@apis/index';
-import { useApolloClient, useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import qs from 'qs';
 import Header from '@layouts/Header';
-import { Container, DetailSearchContainer, PageContariner } from './style';
+import { Container, DetailSearchContainer } from './style';
 import Button from '@common/Button';
 import UploadIcon from '../../public/static/svg/check_mark.svg';
+import { useLocalStorage } from '@hooks/useLocalStorage';
 
 const Deatil: React.VFC = () => {
   const [results, setResults] = useState([]);
   const [repoCount, setRepoCount] = useState(0);
+  const [key, setKey] = useLocalStorage('repoType');
   const location = useLocation();
 
   // page variable
@@ -27,38 +29,29 @@ const Deatil: React.VFC = () => {
     },
   });
 
-  // localStroage 추가
-  const repoAddedClick = useCallback((id: string, name: string, login: string) => {
-    let realData = JSON.parse(localStorage.getItem('repoType')!) || [];
+  const repoAddedClick = useCallback((id, name, login, avatarUrl) => {
     let repoObj = {
       id,
       repoName: name,
       repoOwner: login,
+      ownerSrc: avatarUrl,
     };
-    if (realData && realData.length === 5) {
-      alert('5개까지 추가할 수 있습니다.');
-      return false;
-    }
-
-    // 중복 검사
-    if (realData.length > 0) {
-      const data = realData.some((data: any) => data.id === repoObj.id);
-      // 기존 배열에 다른 경우 추가
-      if (!data) {
-        realData.push(repoObj);
-        localStorage.setItem('repoType', JSON.stringify(realData));
+    setKey((oldArray: any) => {
+      if (oldArray.length >= 5) {
+        alert('5개까지 추가하실 수 있습니다.');
+        return oldArray;
+      } else {
+        const data = oldArray.some((data: any) => data.id === repoObj.id);
+        console.log(data);
+        if (data) {
+          alert('이미 등록된 레포입니다.');
+          return oldArray;
+        }
       }
-      // 중복 데이터가 존재하는 경우
-      else if (data) {
-        alert('이미 추가한 레포입니다.');
-        return false;
-      }
-    }
-    // 새로운 데이터 추가하는 경우
-    else {
-      realData.push(repoObj);
-      localStorage.setItem('repoType', JSON.stringify(realData));
-    }
+      const newArr = [...oldArray, { ...repoObj }];
+      alert('등록되었습니다.');
+      return newArr;
+    });
   }, []);
 
   // 1~10 / 11~20 / 21~30 /
@@ -92,7 +85,7 @@ const Deatil: React.VFC = () => {
       ) : (
         <>
           <h1>{repoCount === 0 ? `아무것도 없습니다.` : `TotalRepository : ${repoCount} `}</h1>
-
+          <h4>Added Repository Count :{key.length}</h4>
           <DetailSearchContainer>
             {results.map((result) => {
               let {
@@ -123,7 +116,11 @@ const Deatil: React.VFC = () => {
                     </div>
                   </div>
 
-                  <Button icon={<UploadIcon />} color="black" onClick={() => repoAddedClick(id, name, login)} />
+                  <Button
+                    icon={<UploadIcon />}
+                    color="black"
+                    onClick={() => repoAddedClick(id, name, login, avatarUrl)}
+                  />
                 </div>
               );
             })}

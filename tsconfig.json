@@ -20,7 +20,7 @@
             "@hooks/*" : ["hooks/*"]
             ,"@components/*" : ["components/*"]
             ,"@layouts/*" : ["layouts/*"]
-            ,"@util/*" : ["utils/*"]
+            ,"@utils/*" : ["utils/*"]
             ,"@apis/*" : ["apis/*"]
             ,"@pages/*" : ["pages/*"]
             ,"@common/*" : ["common/*"]

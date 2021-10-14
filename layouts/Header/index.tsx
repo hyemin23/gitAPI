@@ -38,7 +38,7 @@ const Header = () => {
         </form>
       </div>
       <HeaderNavigation>
-        <Link to="#">
+        <Link to="/subscribe">
           <span>Subscribe Issues</span>
         </Link>
       </HeaderNavigation>

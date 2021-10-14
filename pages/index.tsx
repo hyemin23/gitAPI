@@ -46,7 +46,7 @@ const Home = () => {
       <Navigation>
         <ul>
           <li>
-            <Link to="#">
+            <Link to="/subscribe">
               <span className="highlight">
                 <span>Subscribe</span>
               </span>

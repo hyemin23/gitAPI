@@ -5,9 +5,7 @@ export const Container = styled.div`
   height: 100vh;
   background-color: white;
 
-  h1 {
-    text-align: center;
-  }
+  text-align: center;
 `;
 
 export const DetailSearchContainer = styled.div`
@@ -42,18 +40,18 @@ export const DetailSearchContainer = styled.div`
         justify-content: center;
         align-items: center;
 
-        font-size: 12px;
+        font-size: 15px;
         & div {
           padding: 10px;
         }
         .detail_header_repo_name_container {
-          width: 150px;
+          width: 200px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
 
           .detail_header_repo_name:hover {
-            font-size: 15px;
+            font-size: 18px;
           }
         }
       }
