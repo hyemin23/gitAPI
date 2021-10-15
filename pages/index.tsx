@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const [repoValue, setRepoValue] = useState('');
   const history = useHistory();
-  // const serachKeyword = useDebounce(repoValue, 300);
 
   const onChangeRepo = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setRepoValue(event.target.value);

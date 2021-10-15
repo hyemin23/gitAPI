@@ -4,6 +4,7 @@ import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-serv
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 // typescript에서만 활용 ts,webpack 동시 실행하게 만들어주는 플러그인
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -84,7 +85,12 @@ const config: Configuration = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),
+    // react 에서 NODE_ENV 변수를 사용할 수 있게 만들어줌 원래는 backend에서만 실행 가능함(노드 런타임 때만 접근 가능하지만)
+    // 해당 설정을 해주면 NODE_ENV 접근 가능
+    // new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
+    new Dotenv(),
   ],
+
   devServer: {
     // router 설정(새로고침 시 오류 방지)
     historyApiFallback: true,

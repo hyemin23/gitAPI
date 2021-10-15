@@ -10,6 +10,26 @@ import UploadIcon from '../../public/static/svg/check_mark.svg';
 import { useLocalStorage } from '@hooks/useLocalStorage';
 import Page from '@components/Page';
 
+// page updateQuery
+export const getUpdatePageQuery = (prev: any, { fetchMoreResult }: any) => {
+  if (!fetchMoreResult) return prev;
+
+  if (!fetchMoreResult) return prev;
+  const { startCursor, endCursor } = fetchMoreResult.search.pageInfo;
+
+  return Object.assign({}, prev, {
+    search: {
+      edges: [...prev.search.edges, ...fetchMoreResult.search.edges],
+      pageInfo: {
+        ...prev.search.pageInfo,
+        startCursor,
+        endCursor,
+      },
+      repositoryCount: prev.search.repositoryCount,
+    },
+  });
+};
+
 const Deatil: React.VFC = () => {
   const [key, setKey] = useLocalStorage('repoType');
   const location = useLocation();
@@ -56,7 +76,6 @@ const Deatil: React.VFC = () => {
 
   const { hasNextPage, hasPreviousPage, startCursor, endCursor } = data.search.pageInfo;
   const { repositoryCount, edges: results } = data.search;
-  // const totalCount = Math.ceil(repositoryCount / perPageNumber);
 
   return (
     <Container>
@@ -111,8 +130,12 @@ const Deatil: React.VFC = () => {
             hasNextPage={hasNextPage}
             hasPreviousPage={hasPreviousPage}
             startCursor={startCursor}
-            endCursor={endCursor}
             fetchMore={fetchMore}
+            changeVariables={endCursor}
+            changeUpdateQuery={getUpdatePageQuery}
+            // variables={{
+            //   coursor: endCursor,
+            // }}
           />
         </>
       )}

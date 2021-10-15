@@ -1,4 +1,5 @@
 import Input from '@common/Input';
+import Page from '@components/Page';
 import React from 'react';
 import { IssueContainer } from './style';
 
@@ -15,7 +16,6 @@ const IssueList: React.FC<IProps> = ({ issuesData }) => {
             <h3>
               Issue : <a href={`${node.url}`}>{node.title}</a>
             </h3>
-            {/* 이슈에 따른 body html 출력*/}
             <div className="issue_item_detail_info">
               <Input type="checkbox" id={`check_${node.id}`} />
               <label htmlFor={`check_${node.id}`}>
@@ -26,6 +26,9 @@ const IssueList: React.FC<IProps> = ({ issuesData }) => {
           </div>
         );
       })}
+
+      {/* update Query , 각 issue coursor information*/}
+      {/* <Page /> */}
     </IssueContainer>
   );
 };
