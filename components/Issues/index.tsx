@@ -28,7 +28,7 @@ const Issues: React.FC<IssueInfo> = ({ repositoryName, repositoryOwner }) => {
 
   const {
     repository: {
-      issues: { edges: issuesData },
+      issues: { edges: issuesData, pageInfo },
     },
   } = data;
 
@@ -38,7 +38,13 @@ const Issues: React.FC<IssueInfo> = ({ repositoryName, repositoryOwner }) => {
 
   return (
     <Container>
-      <IssueList issuesData={issuesData} />
+      <IssueList
+        issuesData={issuesData}
+        pageInfo={pageInfo}
+        fetchMore={fetchMore}
+        repositoryName={repositoryName}
+        repositoryOwner={repositoryOwner}
+      />
     </Container>
   );
 };

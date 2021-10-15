@@ -11,13 +11,13 @@ import { useLocalStorage } from '@hooks/useLocalStorage';
 import Page from '@components/Page';
 
 // page updateQuery
-export const getUpdatePageQuery = (prev: any, { fetchMoreResult }: any) => {
+const getUpdatePageQuery = (prev: any, { fetchMoreResult }: any) => {
   if (!fetchMoreResult) return prev;
 
-  if (!fetchMoreResult) return prev;
   const { startCursor, endCursor } = fetchMoreResult.search.pageInfo;
 
-  return Object.assign({}, prev, {
+  return {
+    ...prev,
     search: {
       edges: [...prev.search.edges, ...fetchMoreResult.search.edges],
       pageInfo: {
@@ -27,7 +27,7 @@ export const getUpdatePageQuery = (prev: any, { fetchMoreResult }: any) => {
       },
       repositoryCount: prev.search.repositoryCount,
     },
-  });
+  };
 };
 
 const Deatil: React.VFC = () => {
@@ -125,17 +125,16 @@ const Deatil: React.VFC = () => {
               );
             })}
           </DetailSearchContainer>
-          {/* pageInfo */}
+
           <Page
             hasNextPage={hasNextPage}
             hasPreviousPage={hasPreviousPage}
             startCursor={startCursor}
             fetchMore={fetchMore}
-            changeVariables={endCursor}
+            changeVariables={{
+              cursor: endCursor,
+            }}
             changeUpdateQuery={getUpdatePageQuery}
-            // variables={{
-            //   coursor: endCursor,
-            // }}
           />
         </>
       )}

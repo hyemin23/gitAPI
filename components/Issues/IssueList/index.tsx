@@ -3,11 +3,53 @@ import Page from '@components/Page';
 import React from 'react';
 import { IssueContainer } from './style';
 
+// page updateQuery
+const getUpdateDetailPageQuery = (prev: any, { fetchMoreResult }: any) => {
+  if (!fetchMoreResult) return prev;
+
+  const { startCursor, endCursor } = fetchMoreResult.repository.issues.pageInfo;
+
+  // return {
+  //   ...prev,
+  //   repository: {
+  //     issues: {
+  //       edges: [...prev.repository.issues.edges, ...fetchMoreResult.repository.issues.edges],
+  //       pageInfo: {
+  //         ...prev.repository.issues.pageInfo,
+  //         startCursor,
+  //         endCursor,
+  //       },
+  //     },
+  //   },
+  // };
+
+  return fetchMoreResult;
+};
+
 interface IProps {
-  issuesData: any;
+  issuesData: Array<object>[];
+  pageInfo: pageInfo;
+  fetchMore: any;
+  repositoryName: string;
+  repositoryOwner: string;
 }
 
-const IssueList: React.FC<IProps> = ({ issuesData }) => {
+type pageInfo = {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string;
+  endCursor: string;
+};
+
+const IssueList: React.FC<IProps> = ({ issuesData, pageInfo, fetchMore, repositoryName, repositoryOwner }) => {
+  const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo;
+
+  let variableObj = {
+    cursor: endCursor,
+    name: repositoryName,
+    owner: repositoryOwner,
+  };
+
   return (
     <IssueContainer>
       {issuesData.map(({ node }: any) => {
@@ -27,8 +69,15 @@ const IssueList: React.FC<IProps> = ({ issuesData }) => {
         );
       })}
 
-      {/* update Query , 각 issue coursor information*/}
-      {/* <Page /> */}
+      {/* 이슈사항은 각각의 repoName,Owner기준으로 page를 update해야 한다. */}
+      <Page
+        hasNextPage={hasNextPage}
+        hasPreviousPage={hasPreviousPage}
+        startCursor={startCursor}
+        fetchMore={fetchMore}
+        changeVariables={variableObj}
+        changeUpdateQuery={getUpdateDetailPageQuery}
+      />
     </IssueContainer>
   );
 };

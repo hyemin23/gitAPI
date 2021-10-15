@@ -6,7 +6,7 @@ interface IProps {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   startCursor?: string;
-  changeVariables: string;
+  changeVariables: object;
   changeUpdateQuery: any;
   fetchMore: ({ variables, updateQuery }: { variables: object; updateQuery: any }) => void;
 }
@@ -19,9 +19,7 @@ const Page: React.FC<IProps> = ({ hasNextPage, changeVariables, fetchMore, chang
           <Button
             onClick={async () =>
               await fetchMore({
-                variables: {
-                  cursor: changeVariables,
-                },
+                variables: changeVariables,
                 updateQuery: changeUpdateQuery,
               })
             }

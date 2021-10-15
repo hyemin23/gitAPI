@@ -42,7 +42,7 @@ const REPOSITORY_FRAGMENT = gql`
       id
       login
     }
-    issues(states: OPEN, first: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
+    issues(states: OPEN, first: 10, orderBy: { field: CREATED_AT, direction: DESC }, after: $cursor) {
       edges {
         node {
           id
@@ -51,16 +51,21 @@ const REPOSITORY_FRAGMENT = gql`
           }
           title
           url
-          bodyHTML
         }
         cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
+        startCursor
       }
     }
   }
 `;
 
 export const getRepoInfo = gql`
-  query getRepoInfo($name: String!, $owner: String!) {
+  query getRepoInfo($name: String!, $owner: String!, $cursor: String) {
     repository(name: $name, owner: $owner) {
       ...commonFields
     }

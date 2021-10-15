@@ -85,9 +85,6 @@ const config: Configuration = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),
-    // react 에서 NODE_ENV 변수를 사용할 수 있게 만들어줌 원래는 backend에서만 실행 가능함(노드 런타임 때만 접근 가능하지만)
-    // 해당 설정을 해주면 NODE_ENV 접근 가능
-    // new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
     new Dotenv(),
   ],
 
