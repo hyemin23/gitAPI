@@ -1,41 +1,8 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Container } from './style';
 import IssueList from './IssueList';
-
-const REPOSITORY_FRAGMENT = gql`
-  fragment commonFields on Repository {
-    name
-    hasIssuesEnabled
-    owner {
-      id
-      login
-    }
-    issues(states: OPEN, first: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
-      edges {
-        node {
-          id
-          author {
-            login
-          }
-          title
-          url
-          bodyHTML
-        }
-        cursor
-      }
-    }
-  }
-`;
-
-const getRepoInfo = gql`
-  query getRepoInfo($name: String!, $owner: String!) {
-    repository(name: $name, owner: $owner) {
-      ...commonFields
-    }
-  }
-  ${REPOSITORY_FRAGMENT}
-`;
+import { getRepoInfo } from '@apis/index';
 
 interface IssueInfo {
   repositoryName: string;
@@ -49,6 +16,7 @@ const Issues: React.FC<IssueInfo> = ({ repositoryName, repositoryOwner }) => {
       name: repositoryName,
       owner: repositoryOwner,
     },
+    notifyOnNetworkStatusChange: true,
   });
 
   if (loading) {
@@ -67,6 +35,7 @@ const Issues: React.FC<IssueInfo> = ({ repositoryName, repositoryOwner }) => {
   if (!issuesData.length) {
     return <div>이슈가 없습니다 !</div>;
   }
+
   return (
     <Container>
       <IssueList issuesData={issuesData} />

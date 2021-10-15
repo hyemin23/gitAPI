@@ -22,9 +22,11 @@ const RepositoryList: React.FC<IParamProps> = ({ localData }) => {
 
   return (
     <RepoListContainer>
-      {localData.map((data: any) => (
-        <RepositoryItem localItem={data} deleteRepo={deleteRepo} key={data.id} />
-      ))}
+      {localData.length ? (
+        localData.map((data: any) => <RepositoryItem localItem={data} deleteRepo={deleteRepo} key={data.id} />)
+      ) : (
+        <p>비어있습니다...</p>
+      )}
     </RepoListContainer>
   );
 };

@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, concat, createHttpLink, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { relayStylePagination } from '@apollo/client/utilities';
 
 const URL = 'https://api.github.com/graphql';
 const httpLink = createHttpLink({ uri: URL, fetch });
@@ -22,7 +23,15 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: concat(authLink, httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          search: relayStylePagination(),
+        },
+      },
+    },
+  }),
 });
 
 render(

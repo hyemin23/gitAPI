@@ -28,12 +28,7 @@ const Subscribe: React.FC = () => {
         >
           Clear All
         </Button>
-
         <RepositoryList localData={key} />
-
-        <div>
-          <div className="Issues_container"></div>
-        </div>
       </Container>
     </>
   );

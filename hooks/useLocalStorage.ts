@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 
 function getStorageValue(key: string) {
   const saved: any = localStorage.getItem(key);
